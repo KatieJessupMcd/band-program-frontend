@@ -1,0 +1,76 @@
+Components
+
+SchoolsView
+- Shows index of schools
+- Contains school cards
+
+
+SchoolCard
+- Contains
+- School Name
+- Grade Range
+
+MainView (where you land after selecting school)
+- Header 
+- App name on left
+- Left side nav, contains links to other views
+- School Name
+- Grade Range
+- Shows aggregated stats about school
+    - Number of students in each grade
+    - Number of ensembles
+    - Instrument Family makeup
+
+StudentsView
+Shows index view of list of students
+Student info is mapped to contained Student cards
+Contains Component -> CreateStudentForm
+
+StudentCard
+Each student is a ‘card’, that contains
+- Full Name
+- Grade
+- Instrument Type
+- Ensemble
+
+CreateStudentForm
+Form top of student index to create a new student
+Required: 
+- First name
+- Last name
+- Grade
+- Instrument
+Optional
+- Ensemble
+
+Instrument Inventory View
+Index view of all instrument Inventory Items
+- Contains instrument inventory item cards
+
+InstrumentInventoryItemCard
+Each Item is a ‘card’ that contains
+- Instrument Type
+- Make
+- Model
+- Condition Rating
+- Serial Number
+
+EnsemblesView
+- Index view of all ensembles
+-Contains ensemble view cards
+
+EnsembleCard
+Contains
+- Ensemble Name
+- Grade range of students who are in that ensemble
+
+Music Pieces
+- Contains index view of list of pieces that a school owns
+- Each piece is mapped to a music piece card component
+
+MusicPieceCard
+- Contains
+- Title
+- Composer
+- Difficulty
+- Arranger
