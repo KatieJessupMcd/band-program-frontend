@@ -1,37 +1,62 @@
 import logo from './logo.svg';
 import './App.css';
-import { useQuery, gql } from '@apollo/client';
+import React, { useState } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { useQuery, useMutation, gql } from '@apollo/client';
+import SchoolsView from './SchoolsView';
+import SchoolView from './SchoolView';
 
 const GET_SCHOOLS_AND_STUDENTS = gql`
   query getSchools {
     schools {
       name
       students {
+        id
         firstName
         lastName
+        grade
       }
     }
   }
 `;
 
+const CREATE_STUDENT = gql`
+  mutation CreateStudent(
+    $firstName: String!
+    $lastName: String!
+    $grade: Int!
+    $instrumentTypeId: Int!
+    $schoolId: Int!
+  ) {
+    createStudent(
+      input: {
+        firstName: $firstName
+        lastName: $lastName
+        grade: $grade
+        instrumentTypeId: $instrumentTypeId
+        schoolId: $schoolId
+      }
+    ) {
+      student {
+        id
+        firstName
+        lastName
+        grade
+      }
+      errors
+    }
+  }
+`;
+
 function App() {
-  const { loading, error, data } = useQuery(GET_SCHOOLS_AND_STUDENTS);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
-
-  return data.schools.map(({ id, name, students }) => (
-    <div key={id}>
-      <h2>{name}</h2>
-      {students.map((student) => (
-        <ul>
-          <li>
-            {student.firstName} {student.lastName}
-          </li>
-        </ul>
-      ))}
-    </div>
-  ));
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/schools" element={<SchoolsView />}></Route>
+        <Route path="schools/:schoolId" element={<SchoolView />}></Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
