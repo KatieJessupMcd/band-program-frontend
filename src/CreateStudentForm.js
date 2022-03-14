@@ -1,6 +1,6 @@
 import React, { useState, Component } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const GET_SCHOOLS_AND_STUDENTS = gql`
   query getSchools {
@@ -54,12 +54,12 @@ function CreateStudentForm() {
   const [instrumentTypeId, setinstrumentTypeId] = useState(1);
   const [id, setschoolId] = useState(schoolId);
 
+  let navigate = useNavigate();
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   const onSubmit = (input) => {
-    console.log('this is the input we are passing in', input);
-
     createStudent({
       variables: {
         firstName: firstName,
@@ -72,6 +72,10 @@ function CreateStudentForm() {
     setFirstName('');
     setLastName('');
     setGrade(4);
+    navigate(`/schools/${id}/students`, {
+      replace: true,
+      state: { isSuccess: true },
+    });
   };
 
   const handleSubmit = (evt) => {
@@ -102,7 +106,6 @@ function CreateStudentForm() {
         Grade:
         <input
           type="number"
-          step="4"
           value={grade}
           onChange={(e) => setGrade(e.target.value)}
         />
