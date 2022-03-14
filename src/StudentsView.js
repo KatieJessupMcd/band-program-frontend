@@ -1,7 +1,40 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { useQuery, gql } from '@apollo/client';
+import { useParams } from 'react-router-dom';
 
-export default class StudentsView extends Component {
-  render() {
-    return <div>StudentsView</div>;
+const GET_STUDENTS_FOR_SCHOOL = gql`
+  query getSchool($id: ID!) {
+    school(id: $id) {
+      name
+      lowestGrade
+      highestGrade
+      students {
+        firstName
+        lastName
+        grade
+      }
+    }
   }
+`;
+
+export default function StudentsView() {
+  const { schoolId } = useParams();
+  const { loading, error, data } = useQuery(GET_STUDENTS_FOR_SCHOOL, {
+    variables: { id: schoolId },
+  });
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Errror :(</p>;
+  return (
+    <div>
+      <div key={data.school.id}>
+        {data.school.students.map((student) => {
+          return (
+            <div>
+              <span>{student.firstName}</span> <span>{student.lastName}</span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }

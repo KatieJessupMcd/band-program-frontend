@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import SchoolsView from './SchoolsView';
 import SchoolView from './SchoolView';
+import StudentsView from './StudentsView';
 
 const GET_SCHOOLS_AND_STUDENTS = gql`
   query getSchools {
@@ -54,6 +55,10 @@ function App() {
       <Routes>
         <Route path="/schools" element={<SchoolsView />}></Route>
         <Route path="schools/:schoolId" element={<SchoolView />}></Route>
+        <Route
+          path="schools/:schoolId/students"
+          element={<StudentsView />}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );
