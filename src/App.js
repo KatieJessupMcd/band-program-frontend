@@ -6,6 +6,7 @@ import { useQuery, useMutation, gql } from '@apollo/client';
 import SchoolsView from './SchoolsView';
 import SchoolView from './SchoolView';
 import StudentsView from './StudentsView';
+import CreateStudentForm from './CreateStudentForm';
 
 const GET_SCHOOLS_AND_STUDENTS = gql`
   query getSchools {
@@ -58,6 +59,10 @@ function App() {
         <Route
           path="schools/:schoolId/students"
           element={<StudentsView />}
+        ></Route>
+        <Route
+          path="schools/:schoolId/students/new"
+          element={<CreateStudentForm />}
         ></Route>
       </Routes>
     </BrowserRouter>

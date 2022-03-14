@@ -23,6 +23,7 @@ export default function SchoolView() {
 
   return (
     <div>
+      <h1>Main Dashboard for {data.school.name}</h1>
       <nav>
         <NavLink to="students">Students</NavLink>
       </nav>

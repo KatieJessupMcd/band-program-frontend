@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 const GET_STUDENTS_FOR_SCHOOL = gql`
   query getSchool($id: ID!) {
@@ -26,7 +26,9 @@ export default function StudentsView() {
   if (error) return <p>Errror :(</p>;
   return (
     <div>
+      <h1>{data.school.name}: Students</h1>
       <div key={data.school.id}>
+        <Link to="new">Add new student</Link>
         {data.school.students.map((student) => {
           return (
             <div>

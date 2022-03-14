@@ -31,11 +31,20 @@ export default function SchoolsView() {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
-  return data.schools.map(({ id, name }) => (
-    <Link to={`/schools/${id}`}>
-      <div key={id}>
-        <h2>{name}</h2>
+  return (
+    <div>
+      <h1>Schools</h1>
+      <div>
+        {data.schools.map(({ id, name }) => {
+          return (
+            <Link to={`/schools/${id}`}>
+              <div key={id}>
+                <h2>{name}</h2>
+              </div>
+            </Link>
+          );
+        })}
       </div>
-    </Link>
-  ));
+    </div>
+  );
 }
