@@ -1,25 +1,11 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-  Link,
-  useParams,
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const GET_SCHOOLS = gql`
   query getSchools {
     schools {
       id
-      name
-    }
-  }
-`;
-
-const GET_SCHOOL = gql`
-  query getSchool($id: ID!) {
-    school(id: $id) {
       name
     }
   }

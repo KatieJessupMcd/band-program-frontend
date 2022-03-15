@@ -1,5 +1,5 @@
-import React, { useState, Component } from 'react';
-import { useQuery, useMutation, gql } from '@apollo/client';
+import React, { useState } from 'react';
+import { useMutation, gql } from '@apollo/client';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const GET_STUDENTS_FOR_SCHOOL = gql`
