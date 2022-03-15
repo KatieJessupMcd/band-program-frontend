@@ -2,12 +2,13 @@ import React, { useState, Component } from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import { useParams, useNavigate } from 'react-router-dom';
 
-const GET_SCHOOLS_AND_STUDENTS = gql`
-  query getSchools {
-    schools {
+const GET_STUDENTS_FOR_SCHOOL = gql`
+  query getSchool($id: ID!) {
+    school(id: $id) {
       name
+      lowestGrade
+      highestGrade
       students {
-        id
         firstName
         lastName
         grade
@@ -45,19 +46,24 @@ const CREATE_STUDENT = gql`
 `;
 
 function CreateStudentForm() {
-  const { loading, error, data } = useQuery(GET_SCHOOLS_AND_STUDENTS);
   const { schoolId } = useParams();
-  const [createStudent, newStudent] = useMutation(CREATE_STUDENT);
+  let navigate = useNavigate();
+
+  const [createStudent, newStudent] = useMutation(CREATE_STUDENT, {
+    refetchQueries: [GET_STUDENTS_FOR_SCHOOL, 'getSchool'],
+    onCompleted: () => {
+      navigate(`/schools/${id}/students`, {
+        replace: true,
+        state: { isSuccess: true },
+      });
+    },
+  });
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [grade, setGrade] = useState(4);
   const [instrumentTypeId, setinstrumentTypeId] = useState(1);
   const [id, setschoolId] = useState(schoolId);
-
-  let navigate = useNavigate();
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
 
   const onSubmit = (input) => {
     createStudent({
@@ -71,16 +77,11 @@ function CreateStudentForm() {
     });
     setFirstName('');
     setLastName('');
-    setGrade(4);
-    navigate(`/schools/${id}/students`, {
-      replace: true,
-      state: { isSuccess: true },
-    });
+    setGrade('');
   };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log('GRADE IN STATE', typeof grade);
     onSubmit({ firstName, lastName, grade, instrumentTypeId, schoolId });
   };
 

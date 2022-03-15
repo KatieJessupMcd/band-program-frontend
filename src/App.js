@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useQuery, useMutation, gql } from '@apollo/client';
 import SchoolsView from './SchoolsView';
 import SchoolView from './SchoolView';
@@ -52,20 +52,18 @@ const CREATE_STUDENT = gql`
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/schools" element={<SchoolsView />}></Route>
-        <Route path="schools/:schoolId" element={<SchoolView />}></Route>
-        <Route
-          path="schools/:schoolId/students"
-          element={<StudentsView />}
-        ></Route>
-        <Route
-          path="schools/:schoolId/students/new"
-          element={<CreateStudentForm />}
-        ></Route>
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/schools" element={<SchoolsView />}></Route>
+      <Route path="schools/:schoolId" element={<SchoolView />}></Route>
+      <Route
+        path="schools/:schoolId/students"
+        element={<StudentsView />}
+      ></Route>
+      <Route
+        path="schools/:schoolId/students/new"
+        element={<CreateStudentForm />}
+      ></Route>
+    </Routes>
   );
 }
 
